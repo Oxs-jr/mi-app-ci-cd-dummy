@@ -1,0 +1,15 @@
+{
+  "name": "mi-app-ci-cd",
+  "version": "1.0.0",
+  "description": "App para práctica de CI/CD",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
