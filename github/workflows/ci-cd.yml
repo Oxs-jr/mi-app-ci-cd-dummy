@@ -1,1 +1,43 @@
 .github/workflows/
+    name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas
+        run: npm test || exit 1
+
+      - name: Enviar alarma si fallan las pruebas
+        if: failure()
+        run: |
+          echo "🚨 Las pruebas fallaron. ¡Revisa el código!"
+
+  monitor:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Ejecutar monitoreo
+        run: |
+          node monitoreo.js &
+          sleep 10
+          echo "👀 Monitoreo ejecutado. Revisa los logs."
